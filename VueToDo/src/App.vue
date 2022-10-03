@@ -1,56 +1,84 @@
+<template>
+  <h1>ToDo List</h1>
+  <div>
+    <input
+        type="text"
+        v-model="newNoteName"
+        placeholder="Add TO DO"
+        @keypress.enter="addNewNote"
+    />
+    <button @click="addNewNote">
+      ADD
+    </button>
+  </div>
+  <div>Task</div>
+  <div>Action</div>
+  <div v-for="(toDo, index) in notes">
+    <to-do
+        :key="toDo.id"
+        :to-do="toDo"
+    />
+    <button @click="removeNote">
+      DELETE
+    </button>
+  </div>
+</template>
+
+
 <script>
 import ToDo from './components/ToDo.vue'
+import { ref } from 'vue';
 
 export default {
   name: "App",
   components: {
     ToDo,
   },
-  data() {
-    return {
-      placeholderString: 'Add TO DO',
-      newNoteName: '',
-      notes: [
-        {id: 1, name: "note1", checked: true},
-        {id: 2, name: "note2", checked: true},
-        {id: 3, name: "note3", checked: true}
-      ]
-    }
-  },
-  methods: {
-    addNewNote() {
-      if (this.inputValue !== '') {
-        this.notes.push(this.inputValue)
-        this.inputValue = ''
+  setup() {
+    const newNoteName = ref('');
+    const notes = ref([
+      {
+        id: 1,
+        name: "note1",
+        checked: false
+      },
+      {
+        id: 2,
+        name: "note2",
+        checked: false
+      },
+      {
+        id: 3,
+        name: "note3",
+        checked: false
       }
-    },
-    removeNote(index) {
-      this.notes.splice(index, 1)
+    ]);
+
+    const addNewNote = () => {
+      // todo add validation
+      // todo max value reduce
+      const newNote = ref({
+        id: 4 + 1,
+        name: newNoteName.value,
+        checked: false
+      })
+      notes.value.push(newNote.value)
+    };
+
+    const removeNote = (index) => {
+      notes.value.splice(index, 1)
     }
+
+    return {
+      notes,
+      newNoteName,
+      addNewNote,
+      removeNote,
+    };
   },
-  changeNote: function (index) {
-  },
-}
+};
 </script>
 
-<template>
-  <h1>ToDo List</h1>
-  <div>
-    <input
-        type="text"
-        placeholder="Add TO DO">
-    <button
-        @click="addNewNote">ADD
-    </button>
-  </div>
-  <div>Task</div>
-  <div>Action</div>
-  <to-do
-      v-for="(toDo) in notes"
-      :key="toDo.id"
-      :to-do="toDo"
-  />
-</template>
 
 
 

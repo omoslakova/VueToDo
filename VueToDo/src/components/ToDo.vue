@@ -1,3 +1,9 @@
+<template>
+  <div class="todo">
+    {{toDo.name}}
+  </div>
+</template>
+
 <script>
 import {ref} from 'vue'
 
@@ -9,15 +15,15 @@ export default {
       required: true,
     },
   },
+  setup() {
+    return {
+    }
+  }
 }
 
 </script>
 
-<template>
-  <div class="todo">
-    {{toDo.name}}
-  </div>
-</template>
+
 
 
 <style scoped>
