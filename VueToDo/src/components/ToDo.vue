@@ -1,11 +1,27 @@
 <template>
-  <div class="todo">
-    {{toDo.name}}
+  <div
+      class="todo"
+      :class="{
+          done: checked,
+          }"
+  >
+    <input
+      v-model="checked"
+      type="checkbox"
+  />
+    <input
+       v-model="name"
+       :disabled="checked"
+    />
+    <button @click="emitDeleteNote"
+    >
+      DELETE
+    </button>
   </div>
 </template>
 
 <script>
-import {ref} from 'vue'
+import {toRefs} from "@vue/reactivity";
 
 export default {
   name: "ToDo",
@@ -15,8 +31,21 @@ export default {
       required: true,
     },
   },
-  setup() {
+  emits: ['deleteNote'],
+
+  setup(props, {emit}) {
+
+    const {checked, name} = toRefs(props.toDo)
+
+    const emitDeleteNote = () => {
+      emit('deleteNote', props.toDo.id);
+    };
+
     return {
+      checked,
+      name,
+      emitDeleteNote,
+
     }
   }
 }
@@ -24,14 +53,8 @@ export default {
 </script>
 
 
-
-
 <style scoped>
-.read-the-docs {
-  color: #888;
-}
-
-.li {
-  list-style-type: none;
+.done {
+  color: gray;
 }
 </style>

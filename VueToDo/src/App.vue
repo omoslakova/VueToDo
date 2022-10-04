@@ -2,8 +2,8 @@
   <h1>ToDo List</h1>
   <div>
     <input
-        type="text"
         v-model="newNoteName"
+        type="text"
         placeholder="Add TO DO"
         @keypress.enter="addNewNote"
     />
@@ -11,16 +11,18 @@
       ADD
     </button>
   </div>
+  <div>
   <div>Task</div>
   <div>Action</div>
-  <div v-for="(toDo, index) in notes">
+  <div>
     <to-do
+        v-for="(toDo) in notes"
         :key="toDo.id"
         :to-do="toDo"
+        title="title"
+        @deleteNote="removeNote"
     />
-    <button @click="removeNote">
-      DELETE
-    </button>
+  </div>
   </div>
 </template>
 
@@ -57,16 +59,18 @@ export default {
     const addNewNote = () => {
       // todo add validation
       // todo max value reduce
-      const newNote = ref({
-        id: 4 + 1,
+      const newNote = {
+        id: Math.max(...notes.value.map(notes => notes.id)) + 1,
         name: newNoteName.value,
         checked: false
-      })
-      notes.value.push(newNote.value)
+      }
+      notes.value.push(newNote);
+      newNoteName.value = ""
     };
 
-    const removeNote = (index) => {
-      notes.value.splice(index, 1)
+    const removeNote = (id) => {
+      const targetIndex = notes.value.findIndex( (el) => el.id === id)
+      notes.value.splice(targetIndex, 1)
     }
 
     return {
@@ -83,17 +87,5 @@ export default {
 
 
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-}
 
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
 </style>
