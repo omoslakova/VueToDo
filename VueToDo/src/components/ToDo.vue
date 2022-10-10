@@ -57,16 +57,8 @@ export default {
 
 <style scoped>
 
-.todo-container {
-  display: grid;
-  grid-template-columns: 1fr 5fr 3fr ;
-  grid-template-columns: repeat(3, 1fr);
-  text-align: center;
-  gap: 10px;
-}
-
 input {
-  outline:none;
+  outline: none;
 }
 
 .btn-delete {
@@ -80,10 +72,5 @@ input {
   font-size: 14px;
   border: 0px;
 }
-
-.done {
-  color: gray;
-}
-
 
 </style>

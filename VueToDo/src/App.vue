@@ -1,32 +1,36 @@
 <template>
   <div class="wrapper">
-    <h1 class="header"
-    >
+    <div class="header">
+      <h1>
       ToDo List
-    </h1>
-    <div class="todo-input">
+      </h1>
+    </div>
+
+    <div class="form">
       <input
           v-model="newNoteName"
-          type="text"
           placeholder="Add TO DO"
           @keypress.enter="addNewNote"
       />
-    </div>
-    <div class="add">
-      <button class="btn-add"
-              @click="addNewNote">
+      <button
+          class="form__btn-add"
+          @click="addNewNote">
         ADD
       </button>
     </div>
-    <div class="task">Task</div>
-    <div class="action">Action</div>
+
     <div class="notes">
+      <div class="notes__row notes__row_header">
+        <div></div>
+        <div class="task">Task</div>
+        <div class="action">Action</div>
+      </div>
       <to-do
-          v-for="(toDo) in notes"
-          :key="toDo.id"
-          :to-do="toDo"
-          title="title"
-          @deleteNote="removeNote"
+            v-for="(toDo) in notes"
+            :key="toDo.id"
+            :to-do="toDo"
+            class="notes__row"
+            @deleteNote="removeNote"
       />
     </div>
   </div>
@@ -88,53 +92,38 @@ export default {
 
 .wrapper {
   font-family: Georgia;
-  display: grid;
-  grid-template-columns: 30px 30px 160px 100px auto;
-  grid-template-rows: 80px 30px 30px auto;
   text-align: center;
+  width: 400px;
 }
 
 .header {
   color: #2828b5;
-  grid-column: 3 / 3;
-  grid-row: 1 / 1;
 }
 
-.todo-input {
-  grid-column: 2 / 3;
-  grid-row: 2 / 2;
+.form {
   align-items: center;
   outline: none;
+  position: relative;
+  padding-bottom: 20px;
 }
 
-.add {
-  grid-column: 4 / 4;
-  grid-row: 2 / 2;
-  justify-self: start;
-}
-
-.btn-add {
+.form__btn-add {
   background-color: white;
   color: #2828b5;
   border: 2px solid #2828b5;
   border-radius: 4px;
-}
-
-.task {
-  grid-column: 3 / 3;
-  grid-row: 3 / 3;
-  justify-self: start;
-}
-
-.action {
-  grid-column: 4 / 4;
-  grid-row: 3 / 3;
-  justify-self: start;
+  width: 80px;
+  position: absolute;
+  left: 320px;
 }
 
 .notes {
-  grid-column: 1 / 4;
-  grid-row: 4 / 4;
+  position: relative;
+}
+.notes__row {
+  display: grid;
+  grid-template-columns: 30px 1fr 80px;
+  grid-gap: 10px;
 }
 
 </style>
